@@ -27,7 +27,7 @@ Links for the complimentary parts of this course:
 ## Goals for this course:
 
 - Make sure you know how to access and use our machines 👩‍💻
-- Put your data in way that supercomputer can use it fast 💨
+- Put your data in way that supercomputer can use it fast 🏃
 - Distribute your ML workload 💪
 - Important: This is _*NOT*_ a basic AI course 🙇‍♂️
   - If you need one, check [fast.ai](https://course.fast.ai)
@@ -44,6 +44,12 @@ Links for the complimentary parts of this course:
 ::::
 :::: {.col}
 ![Sabrina Benassou](pics/sabrina.jpg)
+::::
+:::: {.col}
+![Ismail Khalfaoui-Hassani](pics/ismail.jpeg)
+::::
+:::: {.col}
+![Javad Kasravi](pics/javad.jpg)
 ::::
 :::
 
@@ -85,7 +91,7 @@ Please open this document on your own browser! We will need it for the exercises
 ### What is a supercomputer?
 
 - Compute cluster: Many computers bound together locally 
-- Supercomputer: A damn lot of computers bound together locally😒
+- Supercomputer: A lot of computers bound together locally😒
   - with a fancy network 🤯
 
 ---
