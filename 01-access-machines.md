@@ -1,8 +1,8 @@
 ---
-author: Alexandre Strube // Sabrina Benassou
+author: Alexandre Strube // Sabrina Benassou // Ismail Khalfaoui-Hassani // Javad Kasravi
 title: Accessing the machines, intro
 #subtitle: A primer in supercomputers
-date: September 16, 2025
+date: March 09, 2025
 
 ---
 ## Communication:
