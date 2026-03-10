@@ -1,7 +1,94 @@
 ---
 author: Sabrina Benassou 
-title: Parallelize Training
-date: February 11th, 2026
+title: Data Loading & Parallelize Training
+date: March 11th, 2026
+---
+
+### Schedule for day 2
+
+| Time          | Title                |
+| ------------- | -----------          |
+| 13:00 - 13:15 | Welcome, questions   |
+| 13:15 - 13:30 | Data loading |
+| 13:30 - 14:15 | Single GPU Training |
+| 14:15 - 14:25 | Coffee Break (flexible) |
+| 14:25 - 15:15 | Data Parallel Training (DDP) |
+| 15:15 - 15:20 | Coffee Break (flexible) |
+| 15:20 - 16:00 | Fully Sharded Data Parallel (FSDP) |
+| 16:00 - 16:05 | Coffee Break (flexible) |
+| 16:05 - 16:40 | Pipeline Parallelism (PP), Tensor Parallelism (TP) & 3D Parallelism  |
+| 16:40 - 17:00 | Questions |
+
+---
+
+# Data Loading
+
+--- 
+
+## Let's talk about DATA
+
+![](images/data.jpeg)
+
+--- 
+
+## I/O is separate and shared
+
+- All compute nodes of all supercomputers see the same files
+- Performance tradeoff between shared accessibility and speed
+- Our I/O server is almost a supercomputer by itself
+    ![JSC Supercomputer Stragegy](images/machines.png){height=350pt}
+
+---
+
+## Where do I keep my files?
+
+- Always store your code in the project1 folder (**`$PROJECT_projectname`** ). In our case 
+
+    ```bash
+    /p/project1/training2609/$USER
+    ```
+
+- Store data in the scratch directory for faster I/O access (**`$SCRATCH_projectname`**). ⚠️**Files in scratch are deleted after 90 days of inactivity.**
+    
+    ```bash
+    /p/scratch/training2609/$USER
+    ```
+
+- Store the data in [`$DATA_dataset`](https://judoor.fz-juelich.de/projects/datasets/) for a more permanent location. 
+
+    ```bash
+    /p/data1/datasets
+    ```
+
+---
+
+## Data loading
+
+- We have CPUs and lots of memory - let's use them
+- If your dataset is relatively small (< 500 GB) and can fit into the working memory (RAM) of each compute node (along with the program state), you can store it in **``/dev/shm``**. This is a special filesystem that uses RAM for storage, making it extremely fast for data access. ⚡️
+- For bigger datasets (> 500 GB), you have many strategies:
+    - Hierarchical Data Format 5 (HDF5)
+    - Apache Arrow
+    - NVIDIA Data Loading Library (DALI)
+    - SquashFS
+
+
+---
+
+## Inodes 
+- Inodes (Index Nodes) are data structures that store metadata about files and directories.
+- Unique identification of files and directories within the file system.
+- Efficient management and retrieval of file metadata.
+- Essential for file operations like opening, reading, and writing.
+- **Limitations**:
+  - **Fixed Number**: Limited number of inodes; no new files if exhausted, even with free disk space.
+  - **Space Consumption**: Inodes consume disk space, balancing is needed for efficiency.
+![](images/inodes.png)
+
+--- 
+
+# Parallelize Training
+
 ---
 
 ## Before Starting
@@ -1427,6 +1514,65 @@ Check out more examples in our [HF recipe](https://sdlaml.pages.jsc.fz-juelich.d
 
 ## Tensor Parallelism (TP)
 
+![](images/tp/row_parallel_1.svg)
+
+---
+
+## TP
+
+![](images/tp/row_parallel_2.svg)
+
+---
+
+## TP
+
+![](images/tp/row_parallel_3.svg)
+
+---
+
+## TP
+
+![](images/tp/column_parallel_1.svg)
+
+---
+
+## TP
+
+![](images/tp/column_parallel_2.svg)
+
+---
+
+## TP
+
+![](images/tp/column_parallel_3.svg)
+
+---
+
+## TP
+
+![](images/tp/column_row_parallel_1.svg)
+
+---
+
+## TP
+
+![](images/tp/column_row_parallel_2.svg)
+
+---
+
+## TP
+
+![](images/tp/column_row_parallel_3.svg)
+
+---
+
+## TP
+
+![](images/tp/column_row_parallel_4.svg)
+
+---
+
+<!-- 
 ![](images/tp/tp-1.png)
 
 ---
@@ -1442,20 +1588,7 @@ Check out more examples in our [HF recipe](https://sdlaml.pages.jsc.fz-juelich.d
 ![](images/tp/tp-3.png)
 
 
----
-
-## TP
-
-![](images/tp/tp-4.png)
-
-
----
-
-## TP
-
-![](images/tp/tp-5.png)
-
----
+--- -->
 
 ## TP 
 
