@@ -126,7 +126,7 @@ date: March 11th, 2026
     
 ---
 
-Let's have a look at the files **```train/single_gpu_training.py```** and **```single_gpu_training.sbatch```** in the repo.
+Let's have a look at the files **```train/to_distributed_training.py.py```** and **```to_distributed_training.py.sbatch```** in the repo.
 
 ![](images/look.jpg)
 
@@ -138,7 +138,7 @@ Let's have a look at the files **```train/single_gpu_training.py```** and **```s
 - Now run:
 
     ```bash
-    sbatch single_gpu_training.sbatch
+    sbatch to_distributed_training.py.sbatch
     ```
 
 - Spoiler alert 🚨
@@ -153,24 +153,25 @@ Let's have a look at the files **```train/single_gpu_training.py```** and **```s
 
 - Remember, there is no internet on the compute node.
 - Therefore, you should:
-    - **Comment out** lines 77 **to** 152.
+    - **Comment out** lines 78 **to** 153.
     - Activate your environment:
 
         ```bash
-        source ./sc_venv_template_HPC_supporter_course/activate.sh
+        source $HOME/course/sc_venv_template/activate.sh
         ```
 
     - Run:
 
         ```bash
-        python train/single_gpu_training.py
+        export PYTHONPATH="${PYTHONPATH}:$(pwd)"
+        python train/to_distributed_training.py.py
         ```
 
-    - **Uncomment back** lines 77-152.
+    - **Uncomment back** lines 78-153.
     - Finally, run your job again 🚀:
 
         ```bash
-        sbatch single_gpu_training.sbatch
+        sbatch to_distributed_training.py.sbatch
         ```
 
 ---
@@ -190,7 +191,7 @@ Let's have a look at the files **```train/single_gpu_training.py```** and **```s
     If you haven’t already, activate your environment: 
 
     ```bash
-    source ./sc_venv_template_HPC_supporter_course/activate.sh
+    source $HOME/course/sc_venv_template/activate.sh
     ````
 
 --- 
@@ -263,7 +264,7 @@ Let's have a look at the files **```train/single_gpu_training.py```** and **```s
 
 ## What if
 
-- At line 3 in file **```single_gpu_training.sbatch```**, we increase the number of GPUs to 4:
+- At line 3 in file **```to_distributed_training.py.sbatch```**, we increase the number of GPUs to 4:
 
     ```bash
     #SBATCH --gres=gpu:4
@@ -272,7 +273,7 @@ Let's have a look at the files **```train/single_gpu_training.py```** and **```s
 - And run our job again
 
     ```bash
-    sbatch single_gpu_training.sbatch
+    sbatch to_distributed_training.py.sbatch
     ```
 
 --- 
@@ -488,21 +489,29 @@ What is in the **```setup()```** method ?
 
 ```python
 def setup():
+
     # Initializes a communication group using 'nccl' as the backend for GPU communication.
     torch.distributed.init_process_group(backend='nccl')
+
     # Get the identifier of each process within a node
     local_rank = int(os.getenv('LOCAL_RANK'))
+
+    # Get the total number of processes in the distributed system
+    world_size = int(os.getenv('WORLD_SIZE'))
+
     # Get the global identifier of each process within the distributed system
     rank = int(os.environ['RANK'])
+
     # Creates a torch.device object that represents the GPU to be used by this process.
     device = torch.device('cuda', local_rank)
     # Sets the default CUDA device for the current process, 
     # ensuring all subsequent CUDA operations are performed on the specified GPU device.
     torch.cuda.set_device(device)
+
     # Different random seed for each process.
     torch.random.manual_seed(1000 + torch.distributed.get_rank())
 
-    return local_rank, rank, device
+    return local_rank, rank, device, world_size
 ```
 
 ---
@@ -717,14 +726,14 @@ def destroy_process_group():
 
 ## We are almost there
 
-- That's it for the **train/single_gpu_training.py** file. 
-- But before launching our job, we need to add some lines to **single_gpu_training.sbatch** file 
+- That's it for the **train/to_distributed_training.py.py** file. 
+- But before launching our job, we need to add some lines to **to_distributed_training.py.sbatch** file 
 
 ---
 
 ## Setup communication
 
-In **```single_gpu_training.sbatch```** file:
+In **```to_distributed_training.py.sbatch```** file:
 
 - **TODOs 14**💻📝: 
     - At line 3, increase the number of GPUs to 4 if it is not already done.
@@ -733,7 +742,7 @@ In **```single_gpu_training.sbatch```** file:
         #SBATCH --gres=gpu:4
         ```
 
-    - At line 21, pass the correct number of devices.
+    - At line 23, pass the correct number of devices.
 
         ```bash
         # Set up four visible GPUs that the job can use 
@@ -744,11 +753,11 @@ In **```single_gpu_training.sbatch```** file:
 
 ## Setup communication
 
-Stay in **```single_gpu_training.sbatch```** file:
+Stay in **```to_distributed_training.py.sbatch```** file:
 
 - **TODO 15**💻📝: we need to setup **MASTER_ADDR** and **MASTER_PORT** to allow communication over the system.
 
-    - At line 24, add the following:
+    - At line 26, add the following:
 
         ```bash
         # Extracts the first hostname from the list of allocated nodes to use as the master address.
@@ -764,14 +773,14 @@ Stay in **```single_gpu_training.sbatch```** file:
 
 ## Setup communication
 
-We are not done yet with **```single_gpu_training.sbatch```** file:
+We are not done yet with **```to_distributed_training.py.sbatch```** file:
 
 - **TODO 16**💻📝: 
     
-    - We **remove** the lauching script at line 45:
+    - We **remove** the lauching script at line 48:
     
         ```bash
-        srun --cpu_bind=none python train/single_gpu_training.py 
+        srun --cpu_bind=none python train/to_distributed_training.py.py 
         ```
     
     - We use **torchrun** instead to launch our training and pass the following argument: 
@@ -785,7 +794,7 @@ We are not done yet with **```single_gpu_training.sbatch```** file:
             --rdzv_id $RANDOM \
             --rdzv_endpoint=$MASTER_ADDR:$MASTER_PORT \
             --rdzv_conf=is_host=\$(if ((SLURM_NODEID)); then echo 0; else echo 1; fi) \
-            train/single_gpu_training.py "
+            train/to_distributed_training.py.py "
         ```
 
 ---
@@ -808,7 +817,7 @@ We are not done yet with **```single_gpu_training.sbatch```** file:
 - You can finally run:
 
     ```bash
-    sbatch single_gpu_training.sbatch
+    sbatch to_distributed_training.py.sbatch
     ```
 
 ---
@@ -837,7 +846,7 @@ We are not done yet with **```single_gpu_training.sbatch```** file:
 
 ## Multi-node training
 
-- **TODO 17**💻📝: in **```single_gpu_training.sbatch```** at line 2, you can increase the number of nodes to 2:
+- **TODO 17**💻📝: in **```to_distributed_training.py.sbatch```** at line 2, you can increase the number of nodes to 2:
 
     ```bash
     #SBATCH --nodes=2
@@ -848,7 +857,7 @@ We are not done yet with **```single_gpu_training.sbatch```** file:
 - Run again:
 
     ```bash
-    sbatch single_gpu_training.sbatch
+    sbatch to_distributed_training.py.sbatch
     ```
 
 --- 
@@ -1149,14 +1158,14 @@ To use DDP with PL, we need to make some changes to the model code and the sbatc
 ## Save Model state
 
 - **TODO 18**💻📝: 
-    - **Remove** lines 153 to 155 and **replace** them with:
+    - **Remove** lines 152 to 154 and **replace** them with:
         
         ```python
         # Save sharded model and optimizer
         save_sharded_model(model, optimizer, 'model_best')
         ```
 
-    - **Remove** lines 161 to 163 and **replace** them with:
+    - **Remove** lines 160 to 162 and **replace** them with:
         
         ```python    
         # Save sharded model and optimizer
