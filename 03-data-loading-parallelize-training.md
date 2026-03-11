@@ -126,7 +126,7 @@ date: March 11th, 2026
     
 ---
 
-Let's have a look at the files **```train/to_distributed_training.py.py```** and **```to_distributed_training.py.sbatch```** in the repo.
+Let's have a look at the files **```train/to_distributed_training.py```** and **```to_distributed_training.sbatch```** in the repo.
 
 ![](images/look.jpg)
 
@@ -138,7 +138,7 @@ Let's have a look at the files **```train/to_distributed_training.py.py```** and
 - Now run:
 
     ```bash
-    sbatch to_distributed_training.py.sbatch
+    sbatch to_distributed_training.sbatch
     ```
 
 - Spoiler alert 🚨
@@ -164,14 +164,14 @@ Let's have a look at the files **```train/to_distributed_training.py.py```** and
 
         ```bash
         export PYTHONPATH="${PYTHONPATH}:$(pwd)"
-        python train/to_distributed_training.py.py
+        python train/to_distributed_training.py
         ```
 
     - **Uncomment back** lines 78-153.
     - Finally, run your job again 🚀:
 
         ```bash
-        sbatch to_distributed_training.py.sbatch
+        sbatch to_distributed_training.sbatch
         ```
 
 ---
@@ -264,7 +264,7 @@ Let's have a look at the files **```train/to_distributed_training.py.py```** and
 
 ## What if
 
-- At line 3 in file **```to_distributed_training.py.sbatch```**, we increase the number of GPUs to 4:
+- At line 3 in file **```to_distributed_training.sbatch```**, we increase the number of GPUs to 4:
 
     ```bash
     #SBATCH --gres=gpu:4
@@ -273,7 +273,7 @@ Let's have a look at the files **```train/to_distributed_training.py.py```** and
 - And run our job again
 
     ```bash
-    sbatch to_distributed_training.py.sbatch
+    sbatch to_distributed_training.sbatch
     ```
 
 --- 
@@ -726,14 +726,14 @@ def destroy_process_group():
 
 ## We are almost there
 
-- That's it for the **train/to_distributed_training.py.py** file. 
-- But before launching our job, we need to add some lines to **to_distributed_training.py.sbatch** file 
+- That's it for the **train/to_distributed_training.py** file. 
+- But before launching our job, we need to add some lines to **to_distributed_training.sbatch** file 
 
 ---
 
 ## Setup communication
 
-In **```to_distributed_training.py.sbatch```** file:
+In **```to_distributed_training.sbatch```** file:
 
 - **TODOs 14**💻📝: 
     - At line 3, increase the number of GPUs to 4 if it is not already done.
@@ -753,7 +753,7 @@ In **```to_distributed_training.py.sbatch```** file:
 
 ## Setup communication
 
-Stay in **```to_distributed_training.py.sbatch```** file:
+Stay in **```to_distributed_training.sbatch```** file:
 
 - **TODO 15**💻📝: we need to setup **MASTER_ADDR** and **MASTER_PORT** to allow communication over the system.
 
@@ -773,14 +773,14 @@ Stay in **```to_distributed_training.py.sbatch```** file:
 
 ## Setup communication
 
-We are not done yet with **```to_distributed_training.py.sbatch```** file:
+We are not done yet with **```to_distributed_training.sbatch```** file:
 
 - **TODO 16**💻📝: 
     
     - We **remove** the lauching script at line 48:
     
         ```bash
-        srun --cpu_bind=none python train/to_distributed_training.py.py 
+        srun --cpu_bind=none python train/to_distributed_training.py 
         ```
     
     - We use **torchrun** instead to launch our training and pass the following argument: 
@@ -794,7 +794,7 @@ We are not done yet with **```to_distributed_training.py.sbatch```** file:
             --rdzv_id $RANDOM \
             --rdzv_endpoint=$MASTER_ADDR:$MASTER_PORT \
             --rdzv_conf=is_host=\$(if ((SLURM_NODEID)); then echo 0; else echo 1; fi) \
-            train/to_distributed_training.py.py "
+            train/to_distributed_training.py "
         ```
 
 ---
@@ -817,7 +817,7 @@ We are not done yet with **```to_distributed_training.py.sbatch```** file:
 - You can finally run:
 
     ```bash
-    sbatch to_distributed_training.py.sbatch
+    sbatch to_distributed_training.sbatch
     ```
 
 ---
@@ -846,7 +846,7 @@ We are not done yet with **```to_distributed_training.py.sbatch```** file:
 
 ## Multi-node training
 
-- **TODO 17**💻📝: in **```to_distributed_training.py.sbatch```** at line 2, you can increase the number of nodes to 2:
+- **TODO 17**💻📝: in **```to_distributed_training.sbatch```** at line 2, you can increase the number of nodes to 2:
 
     ```bash
     #SBATCH --nodes=2
@@ -857,7 +857,7 @@ We are not done yet with **```to_distributed_training.py.sbatch```** file:
 - Run again:
 
     ```bash
-    sbatch to_distributed_training.py.sbatch
+    sbatch to_distributed_training.sbatch
     ```
 
 --- 
