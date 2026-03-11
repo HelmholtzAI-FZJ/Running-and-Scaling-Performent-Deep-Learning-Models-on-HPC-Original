@@ -253,7 +253,7 @@ train_loader = DataLoader(train_dataset,
 
 <div style="font-weight: bold; background-color: #ffcccc;">
 ```bash
-sbatch --disable-dcgm single_gpu_training.sbatch --profile
+sbatch --disable-dcgm single_gpu_training_profiling.sbatch --profile
 ```
 </div>
 
