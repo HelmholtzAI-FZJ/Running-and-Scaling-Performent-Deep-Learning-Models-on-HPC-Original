@@ -431,8 +431,8 @@ Face used to access, load, process, and share large datasets.</li>
 <section class="slide level2">
 
 <p>Let’s have a look at the files
-<strong><code>train/single_gpu_training.py</code></strong> and
-<strong><code>single_gpu_training.sbatch</code></strong> in the
+<strong><code>train/to_distributed_training.py.py</code></strong> and
+<strong><code>to_distributed_training.py.sbatch</code></strong> in the
 repo.</p>
 <p><img data-src="images/look.jpg" /></p>
 </section>
@@ -444,7 +444,7 @@ not modify the TODOs for now</strong>. The code is already working, so
 you don’t need to make any changes at this point.</p></li>
 <li class="fragment"><p>Now run:</p>
 <div class="sourceCode" id="cb5"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> single_gpu_training.sbatch</span></code></pre></div></li>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> to_distributed_training.py.sbatch</span></code></pre></div></li>
 <li class="fragment"><p>Spoiler alert 🚨</p></li>
 <li class="fragment"><p>The code won’t work.</p></li>
 <li class="fragment"><p>Check the output and error files</p></li>
@@ -457,19 +457,20 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="
 node.</li>
 <li class="fragment">Therefore, you should:
 <ul>
-<li class="fragment"><p><strong>Comment out</strong> lines 77
-<strong>to</strong> 152.</p></li>
+<li class="fragment"><p><strong>Comment out</strong> lines 78
+<strong>to</strong> 153.</p></li>
 <li class="fragment"><p>Activate your environment:</p>
 <div class="sourceCode" id="cb6"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> ./sc_venv_template_HPC_supporter_course/activate.sh</span></code></pre></div></li>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> <span class="va">$HOME</span>/course/sc_venv_template/activate.sh</span></code></pre></div></li>
 <li class="fragment"><p>Run:</p>
 <div class="sourceCode" id="cb7"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> train/single_gpu_training.py</span></code></pre></div></li>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">PYTHONPATH</span><span class="op">=</span><span class="st">&quot;</span><span class="va">${PYTHONPATH}</span><span class="st">:</span><span class="va">$(</span><span class="bu">pwd</span><span class="va">)</span><span class="st">&quot;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> train/to_distributed_training.py.py</span></code></pre></div></li>
 <li class="fragment"><p><strong>Uncomment back</strong> lines
-77-152.</p></li>
+78-153.</p></li>
 <li class="fragment"><p>Finally, run your job again 🚀:</p>
 <div class="sourceCode" id="cb8"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> single_gpu_training.sbatch</span></code></pre></div></li>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> to_distributed_training.py.sbatch</span></code></pre></div></li>
 </ul></li>
 </ul>
 </section>
@@ -490,7 +491,7 @@ training</li>
 <li class="fragment"><p>Activate the Environment</p>
 <p>If you haven’t already, activate your environment:</p>
 <div class="sourceCode" id="cb9"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> ./sc_venv_template_HPC_supporter_course/activate.sh</span></code></pre></div></li>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> <span class="va">$HOME</span>/course/sc_venv_template/activate.sh</span></code></pre></div></li>
 </ol>
 </section>
 <section id="tensorboard-and-wandb" class="slide level2">
@@ -560,13 +561,13 @@ llview).</p></li>
 <h2>What if</h2>
 <ul>
 <li class="fragment"><p>At line 3 in file
-<strong><code>single_gpu_training.sbatch</code></strong>, we increase
-the number of GPUs to 4:</p>
+<strong><code>to_distributed_training.py.sbatch</code></strong>, we
+increase the number of GPUs to 4:</p>
 <div class="sourceCode" id="cb12"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --gres=gpu:4</span></span></code></pre></div></li>
 <li class="fragment"><p>And run our job again</p>
 <div class="sourceCode" id="cb13"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> single_gpu_training.sbatch</span></code></pre></div></li>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> to_distributed_training.py.sbatch</span></code></pre></div></li>
 </ul>
 </section>
 <section id="llview-3" class="slide level2">
@@ -760,21 +761,29 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a h
 <p>What is in the <strong><code>setup()</code></strong> method ?</p>
 <div class="sourceCode" id="cb17"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> setup():</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Initializes a communication group using &#39;nccl&#39; as the backend for GPU communication.</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    torch.distributed.init_process_group(backend<span class="op">=</span><span class="st">&#39;nccl&#39;</span>)</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get the identifier of each process within a node</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    local_rank <span class="op">=</span> <span class="bu">int</span>(os.getenv(<span class="st">&#39;LOCAL_RANK&#39;</span>))</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get the global identifier of each process within the distributed system</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    rank <span class="op">=</span> <span class="bu">int</span>(os.environ[<span class="st">&#39;RANK&#39;</span>])</span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Creates a torch.device object that represents the GPU to be used by this process.</span></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    device <span class="op">=</span> torch.device(<span class="st">&#39;cuda&#39;</span>, local_rank)</span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Sets the default CUDA device for the current process, </span></span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ensuring all subsequent CUDA operations are performed on the specified GPU device.</span></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>    torch.cuda.set_device(device)</span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Different random seed for each process.</span></span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>    torch.random.manual_seed(<span class="dv">1000</span> <span class="op">+</span> torch.distributed.get_rank())</span>
-<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> local_rank, rank, device</span></code></pre></div>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Initializes a communication group using &#39;nccl&#39; as the backend for GPU communication.</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    torch.distributed.init_process_group(backend<span class="op">=</span><span class="st">&#39;nccl&#39;</span>)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get the identifier of each process within a node</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    local_rank <span class="op">=</span> <span class="bu">int</span>(os.getenv(<span class="st">&#39;LOCAL_RANK&#39;</span>))</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get the total number of processes in the distributed system</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    world_size <span class="op">=</span> <span class="bu">int</span>(os.getenv(<span class="st">&#39;WORLD_SIZE&#39;</span>))</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get the global identifier of each process within the distributed system</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>    rank <span class="op">=</span> <span class="bu">int</span>(os.environ[<span class="st">&#39;RANK&#39;</span>])</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Creates a torch.device object that represents the GPU to be used by this process.</span></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>    device <span class="op">=</span> torch.device(<span class="st">&#39;cuda&#39;</span>, local_rank)</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Sets the default CUDA device for the current process, </span></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ensuring all subsequent CUDA operations are performed on the specified GPU device.</span></span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>    torch.cuda.set_device(device)</span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Different random seed for each process.</span></span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>    torch.random.manual_seed(<span class="dv">1000</span> <span class="op">+</span> torch.distributed.get_rank())</span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> local_rank, rank, device, world_size</span></code></pre></div>
 </section>
 <section id="distributedsampler" class="slide level2">
 <h2>DistributedSampler</h2>
@@ -981,14 +990,15 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb32-1"><a h
 <h2>We are almost there</h2>
 <ul>
 <li class="fragment">That’s it for the
-<strong>train/single_gpu_training.py</strong> file.</li>
+<strong>train/to_distributed_training.py.py</strong> file.</li>
 <li class="fragment">But before launching our job, we need to add some
-lines to <strong>single_gpu_training.sbatch</strong> file</li>
+lines to <strong>to_distributed_training.py.sbatch</strong> file</li>
 </ul>
 </section>
 <section id="setup-communication-2" class="slide level2">
 <h2>Setup communication</h2>
-<p>In <strong><code>single_gpu_training.sbatch</code></strong> file:</p>
+<p>In <strong><code>to_distributed_training.py.sbatch</code></strong>
+file:</p>
 <ul>
 <li class="fragment"><strong>TODOs 14</strong>💻📝:
 <ul>
@@ -996,7 +1006,7 @@ lines to <strong>single_gpu_training.sbatch</strong> file</li>
 it is not already done.</p>
 <div class="sourceCode" id="cb33"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --gres=gpu:4</span></span></code></pre></div></li>
-<li class="fragment"><p>At line 21, pass the correct number of
+<li class="fragment"><p>At line 23, pass the correct number of
 devices.</p>
 <div class="sourceCode" id="cb34"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up four visible GPUs that the job can use </span></span>
@@ -1006,14 +1016,15 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb34-1"><a href=
 </section>
 <section id="setup-communication-3" class="slide level2">
 <h2>Setup communication</h2>
-<p>Stay in <strong><code>single_gpu_training.sbatch</code></strong>
+<p>Stay in
+<strong><code>to_distributed_training.py.sbatch</code></strong>
 file:</p>
 <ul>
 <li class="fragment"><p><strong>TODO 15</strong>💻📝: we need to setup
 <strong>MASTER_ADDR</strong> and <strong>MASTER_PORT</strong> to allow
 communication over the system.</p>
 <ul>
-<li class="fragment"><p>At line 24, add the following:</p>
+<li class="fragment"><p>At line 26, add the following:</p>
 <div class="sourceCode" id="cb35"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extracts the first hostname from the list of allocated nodes to use as the master address.</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="va">MASTER_ADDR</span><span class="op">=</span><span class="st">&quot;</span><span class="va">$(</span><span class="ex">scontrol</span> show hostnames <span class="st">&quot;</span><span class="va">$SLURM_JOB_NODELIST</span><span class="st">&quot;</span> <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n</span> 1<span class="va">)</span><span class="st">&quot;</span></span>
@@ -1028,14 +1039,15 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb35-1"><a href=
 <section id="setup-communication-4" class="slide level2">
 <h2>Setup communication</h2>
 <p>We are not done yet with
-<strong><code>single_gpu_training.sbatch</code></strong> file:</p>
+<strong><code>to_distributed_training.py.sbatch</code></strong>
+file:</p>
 <ul>
 <li class="fragment"><p><strong>TODO 16</strong>💻📝:</p>
 <ul>
 <li class="fragment"><p>We <strong>remove</strong> the lauching script
-at line 45:</p>
+at line 48:</p>
 <div class="sourceCode" id="cb36"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="ex">srun</span> <span class="at">--cpu_bind</span><span class="op">=</span>none python train/single_gpu_training.py </span></code></pre></div></li>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="ex">srun</span> <span class="at">--cpu_bind</span><span class="op">=</span>none python train/to_distributed_training.py.py </span></code></pre></div></li>
 <li class="fragment"><p>We use <strong>torchrun</strong> instead to
 launch our training and pass the following argument:</p>
 <div class="sourceCode" id="cb37"><pre
@@ -1047,7 +1059,7 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb37-1"><a href=
 <span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="st">    --rdzv_id </span><span class="va">$RANDOM</span><span class="st"> </span><span class="dt">\</span></span>
 <span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="st">    --rdzv_endpoint=</span><span class="va">$MASTER_ADDR</span><span class="st">:</span><span class="va">$MASTER_PORT</span><span class="st"> </span><span class="dt">\</span></span>
 <span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a><span class="st">    --rdzv_conf=is_host=</span><span class="dt">\$</span><span class="st">(if ((SLURM_NODEID)); then echo 0; else echo 1; fi) </span><span class="dt">\</span></span>
-<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="st">    train/single_gpu_training.py &quot;</span></span></code></pre></div></li>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="st">    train/to_distributed_training.py.py &quot;</span></span></code></pre></div></li>
 </ul></li>
 </ul>
 </section>
@@ -1083,7 +1095,7 @@ setup of communication among the nodes.</li>
 <ul>
 <li class="fragment"><p>You can finally run:</p>
 <div class="sourceCode" id="cb38"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> single_gpu_training.sbatch</span></code></pre></div></li>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> to_distributed_training.py.sbatch</span></code></pre></div></li>
 </ul>
 </section>
 <section id="llview-4" class="slide level2">
@@ -1112,15 +1124,15 @@ training (25m vs 1h32m with one GPU)</p></li>
 <h2>Multi-node training</h2>
 <ul>
 <li class="fragment"><p><strong>TODO 17</strong>💻📝: in
-<strong><code>single_gpu_training.sbatch</code></strong> at line 2, you
-can increase the number of nodes to 2:</p>
+<strong><code>to_distributed_training.py.sbatch</code></strong> at line
+2, you can increase the number of nodes to 2:</p>
 <div class="sourceCode" id="cb39"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --nodes=2</span></span></code></pre></div></li>
 <li class="fragment"><p>Hence, you will use 8 GPUs for
 training.</p></li>
 <li class="fragment"><p>Run again:</p>
 <div class="sourceCode" id="cb40"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> single_gpu_training.sbatch</span></code></pre></div></li>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> to_distributed_training.py.sbatch</span></code></pre></div></li>
 </ul>
 </section>
 <section id="llview-6" class="slide level2">
@@ -1403,12 +1415,12 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb41-1"><a h
 <ul>
 <li class="fragment"><strong>TODO 18</strong>💻📝:
 <ul>
-<li class="fragment"><p><strong>Remove</strong> lines 153 to 155 and
+<li class="fragment"><p><strong>Remove</strong> lines 152 to 154 and
 <strong>replace</strong> them with:</p>
 <div class="sourceCode" id="cb42"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Save sharded model and optimizer</span></span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>save_sharded_model(model, optimizer, <span class="st">&#39;model_best&#39;</span>)</span></code></pre></div></li>
-<li class="fragment"><p><strong>Remove</strong> lines 161 to 163 and
+<li class="fragment"><p><strong>Remove</strong> lines 160 to 162 and
 <strong>replace</strong> them with:</p>
 <div class="sourceCode" id="cb43"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Save sharded model and optimizer</span></span>
