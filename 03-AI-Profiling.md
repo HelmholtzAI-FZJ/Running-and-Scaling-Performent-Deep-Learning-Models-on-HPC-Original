@@ -278,15 +278,23 @@ File -> Open -> Single_GPU/Report_00_zero_woker_unpined_non_blocking_False/nsys_
 
 Use + and − keys to zoom in and out
 
-<div style="padding: 15px 15px 15px 25px; background-color: #e8f5e9; border-left: 5px solid #4caf50; margin: 10px 0; font-size: 0.7em;">
+Go to this link to answer the questions:
+
+<div style="font-weight: bold; background-color: #f0d965; font-size: 0.6em; min-width: 1050px; padding: 8px;">
+  <a href="https://forms.gle/LMyJAzm3Q5tfWJqc7" target="_blank">
+    Single GPU without dataloader Worker
+  </a>
+</div>
+
+<div style="padding: 15px 15px 15px 25px; background-color: #e8f5e9; border-left: 5px solid #4caf50; margin: 10px 0; font-size: 0.5em;">
 <div style="font-weight: bold; margin-bottom: 8px; margin-left: -850px;">📘 Exercise</div>
 <ul style="margin: 5px 0 0 20px;">
 <li>Find the Python process with CUDA HW </li>
 <li>Find the Python thread inside the above process</li>
-<li>Explore PyTorch & NVTX annotations</li>
 <li>How long does it take until one iteration is finished (data transfers, forward, backward, ...)?</li>
+<li>Which part of training takes the most time: data loading, data movement, the forward pass, or the backward pass?</li>
+<li>How long does it take until one data loading step is finished?</li>
 <li>Explore CUDA HW thread and what is the GPU peak memory?</li>
-<li>Explore PyTorch & NVTX annotations (inside CUDA HW)</li>
 </ul>
 </div>
 
@@ -335,13 +343,21 @@ File -> Open -> Single_GPU/Single_GPU/Report_01_multi_woker_unpined_non_blocking
 ```
 </div>
 
+Go to this link to answer the questions:
 
-<div style="padding: 15px 15px 15px 25px; background-color: #e8f5e9; border-left: 5px solid #4caf50; margin: 10px 0; font-size: 0.7em;">
+<div style="font-weight: bold; background-color: #f0d965; font-size: 0.6em; min-width: 1050px; padding: 2px;">
+  <a href="https://forms.gle/oxNaBnjP8cA9kPJw5" target="_blank">
+    Single GPU Multiworkers
+  </a>
+</div>
+
+<div style="padding: 15px 15px 15px 25px; background-color: #e8f5e9; border-left: 5px solid #4caf50; margin: 10px 0; font-size: 0.5em;">
 <div style="font-weight: bold; margin-bottom: 8px; margin-left: -850px;">📘 Exercise</div>
 <ul style="margin: 5px 0 0 20px;">
 <li>Find `pt_data_worker` processes</li>
 <li>How many pt_data_worker traces are created by Nsys?</li>
-<li>How can we determine that this setup is not I/O-bound?</li>
+<li>Which part of training takes the most time: data loading, data movement, the forward pass, or the backward pass?</li>
+<li>How long does it take until one data loading step is finished?</li>
 </ul>
 </div>
 
@@ -352,17 +368,6 @@ File -> Open -> Single_GPU/Single_GPU/Report_01_multi_woker_unpined_non_blocking
 ### Single GPU Multiworkers
 ![](images/profiling/multiworker_vs_zeroworkers.png){style="width: 70%; max-width: 1200px; margin-left: 0; margin-right: auto;"}
 
----
-
-### Single GPU Multiworkers
-
-<div style="padding: 15px 15px 15px 25px; background-color: #e8f5e9; border-left: 5px solid #4caf50; margin: 10px 0; font-size: 0.7em;">
-<div style="font-weight: bold; margin-bottom: 8px; margin-left: -850px;">📘 Exercise</div>
-<ul style="margin: 5px 0 0 20px;">
-<li>Check one iteration of training (PyTorch trace)</li>
-<li>Which operation dominates the training time (per iteration)?</li>
-</ul>
-</div>
 
 <!--
 ---
@@ -439,11 +444,21 @@ File -> Open -> Single_GPU/Report_02_multiwoker_pined_non_blocking_True/nsys_log
 ```
 </div>
 
+Go to this link to answer the questions:
+
+<div style="font-weight: bold; background-color: #f0d965; font-size: 0.6em; min-width: 1050px; padding: 2px;">
+  <a href="https://forms.gle/Fi1EVARNaVRZcpsR8" target="_blank">
+    Single GPU Multiworkers (Asyn. Transfer)
+  </a>
+</div>
+
+
 <div style="padding: 15px 15px 15px 25px; background-color: #e8f5e9; border-left: 5px solid #4caf50; margin: 10px 0; font-size: 0.7em;">
 <div style="font-weight: bold; margin-bottom: 8px; margin-left: -850px;">📘 Exercise</div>
 <ul style="margin: 5px 0 0 20px;">
 <li>Check one iteration of training (PyTorch trace)</li>
-<li>Which part of code dominates the training time (per iteration)?</li>
+<li>Which part of training takes the most time: data loading, data movement, the forward pass, or the backward pass?</li>
+<li>Is there any CUDA synchronization in the trace?</li>
 </ul>
 </div>
 
