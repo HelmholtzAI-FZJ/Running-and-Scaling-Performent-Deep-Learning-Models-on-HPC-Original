@@ -431,8 +431,8 @@ Face used to access, load, process, and share large datasets.</li>
 <section class="slide level2">
 
 <p>Let’s have a look at the files
-<strong><code>train/to_distributed_training.py.py</code></strong> and
-<strong><code>to_distributed_training.py.sbatch</code></strong> in the
+<strong><code>train/to_distributed_training.py</code></strong> and
+<strong><code>to_distributed_training.sbatch</code></strong> in the
 repo.</p>
 <p><img data-src="images/look.jpg" /></p>
 </section>
@@ -444,7 +444,7 @@ not modify the TODOs for now</strong>. The code is already working, so
 you don’t need to make any changes at this point.</p></li>
 <li class="fragment"><p>Now run:</p>
 <div class="sourceCode" id="cb5"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> to_distributed_training.py.sbatch</span></code></pre></div></li>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> to_distributed_training.sbatch</span></code></pre></div></li>
 <li class="fragment"><p>Spoiler alert 🚨</p></li>
 <li class="fragment"><p>The code won’t work.</p></li>
 <li class="fragment"><p>Check the output and error files</p></li>
@@ -465,12 +465,12 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="
 <li class="fragment"><p>Run:</p>
 <div class="sourceCode" id="cb7"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">PYTHONPATH</span><span class="op">=</span><span class="st">&quot;</span><span class="va">${PYTHONPATH}</span><span class="st">:</span><span class="va">$(</span><span class="bu">pwd</span><span class="va">)</span><span class="st">&quot;</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> train/to_distributed_training.py.py</span></code></pre></div></li>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> train/to_distributed_training.py</span></code></pre></div></li>
 <li class="fragment"><p><strong>Uncomment back</strong> lines
 78-153.</p></li>
 <li class="fragment"><p>Finally, run your job again 🚀:</p>
 <div class="sourceCode" id="cb8"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> to_distributed_training.py.sbatch</span></code></pre></div></li>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> to_distributed_training.sbatch</span></code></pre></div></li>
 </ul></li>
 </ul>
 </section>
@@ -561,13 +561,13 @@ llview).</p></li>
 <h2>What if</h2>
 <ul>
 <li class="fragment"><p>At line 3 in file
-<strong><code>to_distributed_training.py.sbatch</code></strong>, we
+<strong><code>to_distributed_training.sbatch</code></strong>, we
 increase the number of GPUs to 4:</p>
 <div class="sourceCode" id="cb12"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --gres=gpu:4</span></span></code></pre></div></li>
 <li class="fragment"><p>And run our job again</p>
 <div class="sourceCode" id="cb13"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> to_distributed_training.py.sbatch</span></code></pre></div></li>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> to_distributed_training.sbatch</span></code></pre></div></li>
 </ul>
 </section>
 <section id="llview-3" class="slide level2">
@@ -990,14 +990,14 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb32-1"><a h
 <h2>We are almost there</h2>
 <ul>
 <li class="fragment">That’s it for the
-<strong>train/to_distributed_training.py.py</strong> file.</li>
+<strong>train/to_distributed_training.py</strong> file.</li>
 <li class="fragment">But before launching our job, we need to add some
-lines to <strong>to_distributed_training.py.sbatch</strong> file</li>
+lines to <strong>to_distributed_training.sbatch</strong> file</li>
 </ul>
 </section>
 <section id="setup-communication-2" class="slide level2">
 <h2>Setup communication</h2>
-<p>In <strong><code>to_distributed_training.py.sbatch</code></strong>
+<p>In <strong><code>to_distributed_training.sbatch</code></strong>
 file:</p>
 <ul>
 <li class="fragment"><strong>TODOs 14</strong>💻📝:
@@ -1016,8 +1016,7 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb34-1"><a href=
 </section>
 <section id="setup-communication-3" class="slide level2">
 <h2>Setup communication</h2>
-<p>Stay in
-<strong><code>to_distributed_training.py.sbatch</code></strong>
+<p>Stay in <strong><code>to_distributed_training.sbatch</code></strong>
 file:</p>
 <ul>
 <li class="fragment"><p><strong>TODO 15</strong>💻📝: we need to setup
@@ -1039,15 +1038,14 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb35-1"><a href=
 <section id="setup-communication-4" class="slide level2">
 <h2>Setup communication</h2>
 <p>We are not done yet with
-<strong><code>to_distributed_training.py.sbatch</code></strong>
-file:</p>
+<strong><code>to_distributed_training.sbatch</code></strong> file:</p>
 <ul>
 <li class="fragment"><p><strong>TODO 16</strong>💻📝:</p>
 <ul>
 <li class="fragment"><p>We <strong>remove</strong> the lauching script
 at line 48:</p>
 <div class="sourceCode" id="cb36"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="ex">srun</span> <span class="at">--cpu_bind</span><span class="op">=</span>none python train/to_distributed_training.py.py </span></code></pre></div></li>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="ex">srun</span> <span class="at">--cpu_bind</span><span class="op">=</span>none python train/to_distributed_training.py </span></code></pre></div></li>
 <li class="fragment"><p>We use <strong>torchrun</strong> instead to
 launch our training and pass the following argument:</p>
 <div class="sourceCode" id="cb37"><pre
@@ -1059,7 +1057,7 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb37-1"><a href=
 <span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="st">    --rdzv_id </span><span class="va">$RANDOM</span><span class="st"> </span><span class="dt">\</span></span>
 <span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="st">    --rdzv_endpoint=</span><span class="va">$MASTER_ADDR</span><span class="st">:</span><span class="va">$MASTER_PORT</span><span class="st"> </span><span class="dt">\</span></span>
 <span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a><span class="st">    --rdzv_conf=is_host=</span><span class="dt">\$</span><span class="st">(if ((SLURM_NODEID)); then echo 0; else echo 1; fi) </span><span class="dt">\</span></span>
-<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="st">    train/to_distributed_training.py.py &quot;</span></span></code></pre></div></li>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="st">    train/to_distributed_training.py &quot;</span></span></code></pre></div></li>
 </ul></li>
 </ul>
 </section>
@@ -1095,7 +1093,7 @@ setup of communication among the nodes.</li>
 <ul>
 <li class="fragment"><p>You can finally run:</p>
 <div class="sourceCode" id="cb38"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> to_distributed_training.py.sbatch</span></code></pre></div></li>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> to_distributed_training.sbatch</span></code></pre></div></li>
 </ul>
 </section>
 <section id="llview-4" class="slide level2">
@@ -1124,15 +1122,15 @@ training (25m vs 1h32m with one GPU)</p></li>
 <h2>Multi-node training</h2>
 <ul>
 <li class="fragment"><p><strong>TODO 17</strong>💻📝: in
-<strong><code>to_distributed_training.py.sbatch</code></strong> at line
-2, you can increase the number of nodes to 2:</p>
+<strong><code>to_distributed_training.sbatch</code></strong> at line 2,
+you can increase the number of nodes to 2:</p>
 <div class="sourceCode" id="cb39"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --nodes=2</span></span></code></pre></div></li>
 <li class="fragment"><p>Hence, you will use 8 GPUs for
 training.</p></li>
 <li class="fragment"><p>Run again:</p>
 <div class="sourceCode" id="cb40"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> to_distributed_training.py.sbatch</span></code></pre></div></li>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> to_distributed_training.sbatch</span></code></pre></div></li>
 </ul>
 </section>
 <section id="llview-6" class="slide level2">
