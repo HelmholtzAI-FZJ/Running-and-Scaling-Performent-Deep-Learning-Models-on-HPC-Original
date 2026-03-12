@@ -385,13 +385,36 @@ Go to this link to answer the questions:
 ![](images/profiling/DMA.png){style="width: 45%; max-width: 1200px; margin-left: 0; margin-right: auto;"}
 
 <div style="padding: 15px 15px 15px 25px; background-color: #e8f5e9; border-left: 5px solid #4caf50; margin: 10px 0; font-size: 0.7em;">
-  <div style="font-weight: bold; margin-bottom: 8px;">📌 Questions</div>
+  <div style="font-weight: bold; margin-bottom: 8px;"></div>
 
   <ul style="margin: 5px 0 0 20px;">
-    <li class="fragment">What does DMA do?</li>
-    <li class="fragment">What is the problem with data transfer by the CPU?</li>
+    <li class="fragment">DMA allows some hardware to access memory without involving the CPU</li>
+    <li class="fragment"> Copying between CPU & GPU uses DMA</li>
+    <li class="fragment">What is the advatage of data transfer by the DMA?</li>
     <li class="fragment">What is the problem of data transfer by the DMA?</li>
-    <li class="fragment">How can we prevent data corruption during DMA transfers?</li>
+  </ul>
+</div>
+
+
+---
+
+## DMA (Direct Memory Access)
+
+
+<div style="padding: 15px 15px 15px 25px; background-color: #e8f5e9; border-left: 5px solid #4caf50; margin: 10px 0; font-size: 0.7em;">
+  <ul style="margin: 5px 0 0 20px;">
+    <li class="fragment">
+      DMA accesses memory using physical addresses.
+      <ul>
+        <li class="fragment">Cannot detect if the OS swaps a virtual page with another virtual page at the same physical address.</li>
+      </ul>
+    </li>
+    <li class="fragment">
+      How can we prevent data corruption during DMA transfers?
+      <ul>
+        <li class="fragment"><strong>Pinning Memory!!</strong></li>
+      </ul>
+    </li>
   </ul>
 </div>
 
@@ -403,6 +426,29 @@ Go to this link to answer the questions:
 How does `cudaMemcpy` copy data from host to device?
 
 ---
+
+
+
+## cudaMemcpy
+
+
+<div style="padding: 15px 15px 15px 25px; background-color: #e8f5e9; border-left: 5px solid #4caf50; margin: 10px 0; font-size: 0.7em;">
+  <ul style="margin: 5px 0 0 20px; padding-left: 0;">
+    <li class="fragment"><strong>What happens during <code>cudaMemcpy</code>:</strong></li>
+
+    <li class="fragment" style="margin-left: 20px;"><strong>Host to Device:</strong></li>
+    <li class="fragment" style="margin-left: 40px;">The CPU copies data to a pinned memory buffer.</li>
+    <li class="fragment" style="margin-left: 40px;">DMA transfers the data from the pinned memory buffer to GPU memory.</li>
+
+    <li class="fragment" style="margin-left: 20px;"><strong>Device to Host:</strong></li>
+    <li class="fragment" style="margin-left: 40px;">DMA transfers data from GPU memory to a pinned memory buffer.</li>
+    <li class="fragment" style="margin-left: 40px;">The CPU copies data from the pinned memory buffer.</li>
+
+    <li class="fragment" style="margin-top: 10px; color: #c62828; font-weight: bold;">Disadvantage:</li>
+    <li class="fragment" style="margin-left: 20px; color: #c62828; font-weight: bold;">Every <code>cudaMemcpy</code> actually involves two copies.</li>
+  </ul>
+</div>
+
 
 ## Memory pinning
 
